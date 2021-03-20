@@ -24,3 +24,11 @@ func countUniqueSecond(arr []int) int {
 	}
 	return i + 1
 }
+
+func countUniqueThird(arr []int) int {
+	m := make(map[int]interface{})
+	for _, v := range arr {
+		m[v] = nil
+	}
+	return len(m)
+}
