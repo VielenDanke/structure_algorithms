@@ -29,3 +29,16 @@ func sumWithoutOne(arr []int) []int {
 	// return new arr
 	return sumArr
 }
+
+func sumWithoutOneBetter(arr []int) []int {
+	sumArr := make([]int, len(arr))
+	sum := 0
+
+	for _, v := range arr {
+		sum += v
+	}
+	for k, v := range arr {
+		sumArr[k] = sum - v
+	}
+	return sumArr
+}
