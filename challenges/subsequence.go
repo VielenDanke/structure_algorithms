@@ -6,9 +6,8 @@ func isSubsequence(sub string, str string) bool {
 	if sub == "" {
 		return false
 	}
-	// sinp sting
+	// sing sting
 	// 0123 01234
-	//
 	for j < len(str) {
 		if str[j] == sub[i] {
 			i++

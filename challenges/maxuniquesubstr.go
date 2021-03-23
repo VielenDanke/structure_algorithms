@@ -19,9 +19,8 @@ func findLongestSubstring(str string) int {
 			if longest < temp {
 				longest = temp
 			}
+			delete(m, r[start])
 			start++
-			idx = start
-			m = make(map[rune]int)
 		}
 	}
 	return longest
