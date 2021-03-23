@@ -1,14 +1,27 @@
 package main
 
 func findLongestSubstring(str string) int {
-	longest := 0
 	m := make(map[rune]int)
-	for k, v := range str {
-		_, ok := m[v]
+	idx := 0
+	start := 0
+	longest := 0
+
+	r := []rune(str)
+
+	for idx < len(str) {
+		ch := r[idx]
+		_, ok := m[ch]
 		if !ok {
-			m[v] = k
+			m[ch] = idx
+			idx++
 		} else {
-			longest = k
+			temp := idx - start
+			if longest < temp {
+				longest = temp
+			}
+			start++
+			idx = start
+			m = make(map[rune]int)
 		}
 	}
 	return longest
