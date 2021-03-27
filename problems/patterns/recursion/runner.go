@@ -3,5 +3,5 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(sumRange(1024))
+	fmt.Println(collectOddNumbers([]int{1, 2, 3, 4}))
 }
