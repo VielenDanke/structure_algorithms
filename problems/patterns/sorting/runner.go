@@ -3,5 +3,5 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(insertionSort([]int{1, 5, 43, 2, 44, 51, 22, 1, 13, 3}))
+	fmt.Println(mergeSort([]int{1, 5, 11, 47, 8, 15, 2}))
 }
