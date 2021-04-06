@@ -1,6 +1,6 @@
 package main
 
-// time O(logN)
+// time O(n log n)
 // space O(n)
 func mergeSort(arr []int) []int {
 	if len(arr) <= 1 {
