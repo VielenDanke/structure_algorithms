@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func quickSort(arr []int, left, right int) []int {
 	if left < right {
 		pivotIdx := pivot(arr, left, right)
@@ -21,7 +19,6 @@ func pivot(arr []int, start, end int) int {
 			swap(arr, swapIdx, i)
 		}
 	}
-	fmt.Println(arr)
 	swap(arr, start, swapIdx)
 	return swapIdx
 }
