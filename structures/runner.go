@@ -12,4 +12,9 @@ func main() {
 	fmt.Println(ll.head.next)
 	fmt.Println(ll.head.next.next)
 	fmt.Println(ll.length)
+
+	n, ok := ll.Pop()
+	fmt.Println(n, ok)
+
+	fmt.Println(ll.length)
 }
