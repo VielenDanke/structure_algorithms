@@ -93,6 +93,15 @@ func (ll *LinkedList) Get(idx int) (toFound *Node, isFound bool) {
 	return toFound, isFound
 }
 
+func (ll *LinkedList) Set(idx int, val string) (ok bool) {
+	fNode, ok := ll.Get(idx)
+	if !ok {
+		return ok
+	}
+	fNode.val = val
+	return ok
+}
+
 func NewLinkedList() *LinkedList {
 	return &LinkedList{
 		head:   nil,
