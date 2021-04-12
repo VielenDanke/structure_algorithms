@@ -23,5 +23,8 @@ func findLongestSubstring(str string) int {
 			start++
 		}
 	}
+	if (idx - start) > longest {
+		longest = idx - start
+	}
 	return longest
 }
