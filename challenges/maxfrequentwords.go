@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"io"
 	"io/ioutil"
-	"sort"
 )
 
 type Node struct {
@@ -38,17 +37,54 @@ func maxFrequentWords(reader io.Reader, amount int) ([]*Node, error) {
 		} else {
 			if !isRepeated {
 				if !bytes.Contains(filteredBuff.Bytes(), word) {
-					filteredBuff.Write(word)
+					_, wErr := filteredBuff.Write(word)
+					if wErr != nil {
+						return nil, wErr
+					}
 					nodes = append(nodes, &Node{key: word, value: bytes.Count(data, word)})
 				}
-				filteredBuff.WriteByte(32)
+				if wbErr := filteredBuff.WriteByte(32); wbErr != nil {
+					return nil, wbErr
+				}
 				word = make([]byte, 0)
 				isRepeated = true
 			}
 		}
 	}
-	sort.Slice(nodes, func(i, j int) bool {
-		return nodes[i].value > nodes[j].value
-	})
+	nodes = mergeSort(nodes)
 	return nodes[0:amount], nil
+}
+
+func mergeSort(arr []*Node) []*Node {
+	if len(arr) <= 1 {
+		return arr
+	}
+	left := mergeSort(arr[:len(arr)/2])
+	right := mergeSort(arr[len(arr)/2:])
+	return merge(left, right)
+}
+
+func merge(first, second []*Node) []*Node {
+	var results []*Node
+	i := 0
+	j := 0
+
+	for i < len(first) && j < len(second) {
+		if first[i].value > second[j].value {
+			results = append(results, first[i])
+			i++
+		} else {
+			results = append(results, second[j])
+			j++
+		}
+	}
+	for i < len(first) {
+		results = append(results, first[i])
+		i++
+	}
+	for j < len(second) {
+		results = append(results, second[j])
+		j++
+	}
+	return results
 }
