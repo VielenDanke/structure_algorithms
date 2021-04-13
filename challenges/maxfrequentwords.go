@@ -12,55 +12,43 @@ type Node struct {
 	value int
 }
 
-func maxFrequentWords(reader io.Reader, amount int) ([]byte, error) {
-	res := make([]byte, 0)
+func maxFrequentWords(reader io.Reader, amount int) ([]*Node, error) {
 	nodes := make([]*Node, 0)
-	data, err := ioutil.ReadAll(reader)
-	data = bytes.ToLower(data)
-	if err != nil {
-		return nil, err
+	data, readAllErr := ioutil.ReadAll(reader)
+	if readAllErr != nil {
+		return nil, readAllErr
 	}
-	buff := bytes.NewBuffer(data)
+	filteredBuff := bytes.NewBuffer(make([]byte, 0))
+	dataBuff := bytes.NewBuffer(data)
+	isRepeated := false
+	temp := make([]byte, 1)
 	word := make([]byte, 0)
 	for {
-		b, readErr := buff.ReadByte()
-		if readErr != nil {
-			break
+		n, err := dataBuff.Read(temp)
+		if err != nil {
+			if err == io.EOF {
+				break
+			}
+			return nil, err
 		}
-		if (b > 64 && b < 91) || (b > 96 && b < 123) {
-			word = append(word, b)
+		temp = bytes.ToLower(temp[0:n])
+		if temp[0] > 96 && temp[0] < 123 {
+			word = append(word, temp[0])
+			isRepeated = false
 		} else {
-			word = bytes.ToLower(word)
-			count := bytes.Count(data, word)
-			n := &Node{key: word, value: count}
-			isFound := false
-			for k, v := range nodes {
-				if v == nil {
-					nodes[k] = n
-					break
+			if !isRepeated {
+				if !bytes.Contains(filteredBuff.Bytes(), word) {
+					filteredBuff.Write(word)
+					nodes = append(nodes, &Node{key: word, value: bytes.Count(data, word)})
 				}
-				if bytes.Contains(v.key, n.key) {
-					isFound = true
-					break
-				}
+				filteredBuff.WriteByte(32)
+				word = make([]byte, 0)
+				isRepeated = true
 			}
-			if !isFound {
-				nodes = append(nodes, n)
-			}
-			word = make([]byte, 0)
 		}
 	}
 	sort.Slice(nodes, func(i, j int) bool {
-		return nodes[j].value < nodes[i].value
+		return nodes[i].value > nodes[j].value
 	})
-	counter := 0
-	for _, v := range nodes {
-		if counter == amount {
-			break
-		}
-		res = append(res, v.key...)
-		res = append(res, 32)
-		counter++
-	}
-	return res, nil
+	return nodes[0:amount], nil
 }

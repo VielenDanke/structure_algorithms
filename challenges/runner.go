@@ -7,6 +7,8 @@ import (
 
 func main() {
 	open, _ := os.Open("text.txt")
-	words, _ := maxFrequentWords(open, 1)
-	fmt.Printf("%s", words)
+	words, _ := maxFrequentWords(open, 15)
+	for _, v := range words {
+		fmt.Printf("%s\n", v.key)
+	}
 }
