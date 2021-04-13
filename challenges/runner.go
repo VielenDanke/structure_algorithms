@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func main() {
-	fmt.Println(longestPalindrome("aacabdkacaa"))
+	open, _ := os.Open("text.txt")
+	words, _ := maxFrequentWords(open, 1)
+	fmt.Printf("%s", words)
 }
