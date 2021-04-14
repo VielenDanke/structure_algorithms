@@ -55,6 +55,9 @@ func maxFrequentWords(reader io.Reader, amount int) ([]*Node, error) {
 		}
 	}
 	nodes = mergeSort(nodes)
+	if len(nodes) < amount {
+		amount = len(nodes)
+	}
 	return nodes[0:amount], nil
 }
 
