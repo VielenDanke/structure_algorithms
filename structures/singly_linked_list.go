@@ -102,6 +102,19 @@ func (ll *LinkedList) Set(idx int, val string) (ok bool) {
 	return ok
 }
 
+func (ll *LinkedList) Insert(idx int, val string) (ok bool) {
+	if idx < 0 || idx > ll.length {
+		return
+	}
+	if idx == ll.length {
+		ll.Push(val)
+		ok = true
+		return
+	}
+	ll.length++
+	return
+}
+
 func NewLinkedList() *LinkedList {
 	return &LinkedList{
 		head:   nil,
