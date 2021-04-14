@@ -109,22 +109,25 @@ func (ll *LinkedList) Insert(idx int, val string) (ok bool) {
 	if idx == ll.length {
 		ll.Push(val)
 		ok = true
+		ll.length++
+		return
+	}
+	if idx == 0 {
+		ll.Unshift(val)
+		ok = true
+		ll.length++
+		return
+	}
+	prev, isFound := ll.Get(idx - 1)
+	if !isFound {
+		ok = false
 		return
 	}
 	n := &Node{val: val}
-	counter := 0
-	fNode := ll.head
-	for {
-		counter++
-		if idx == counter {
-			temp := fNode.next
-			fNode.next = n
-			n.next = temp
-			ok = true
-			break
-		}
-		fNode = fNode.next
-	}
+	temp := prev.next
+	prev.next = n
+	n.next = temp
+	ok = true
 	ll.length++
 	return
 }
