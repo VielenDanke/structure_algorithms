@@ -12,6 +12,9 @@ type Node struct {
 }
 
 func maxFrequentWords(reader io.Reader, amount int) ([]*Node, error) {
+	if amount == 0 {
+		return []*Node{}, nil
+	}
 	nodes := make([]*Node, 0)
 	data, readAllErr := ioutil.ReadAll(reader)
 	if readAllErr != nil {
@@ -19,7 +22,7 @@ func maxFrequentWords(reader io.Reader, amount int) ([]*Node, error) {
 	}
 	filteredBuff := bytes.NewBuffer(make([]byte, 0))
 	dataBuff := bytes.NewBuffer(data)
-	isRepeated := false
+	isWrongLetterRepeated := false
 	temp := make([]byte, 1)
 	word := make([]byte, 0)
 	for {
@@ -33,9 +36,9 @@ func maxFrequentWords(reader io.Reader, amount int) ([]*Node, error) {
 		temp = bytes.ToLower(temp[0:n])
 		if temp[0] > 96 && temp[0] < 123 {
 			word = append(word, temp[0])
-			isRepeated = false
+			isWrongLetterRepeated = false
 		} else {
-			if !isRepeated {
+			if !isWrongLetterRepeated {
 				if !bytes.Contains(filteredBuff.Bytes(), word) {
 					_, wErr := filteredBuff.Write(word)
 					if wErr != nil {
@@ -47,7 +50,7 @@ func maxFrequentWords(reader io.Reader, amount int) ([]*Node, error) {
 					return nil, wbErr
 				}
 				word = make([]byte, 0)
-				isRepeated = true
+				isWrongLetterRepeated = true
 			}
 		}
 	}
