@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func main() {
-	intToRoman(123)
+	fmt.Println(romanToInt("MDCCCLXXXIV"))
 }
