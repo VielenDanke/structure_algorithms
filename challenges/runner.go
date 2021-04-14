@@ -1,14 +1,7 @@
 package main
 
-import (
-	"fmt"
-	"os"
-)
+import "fmt"
 
 func main() {
-	open, _ := os.Open("text.txt")
-	words, _ := maxFrequentWords(open, 15)
-	for _, v := range words {
-		fmt.Printf("Word: %s, amount: %d\n", v.key, v.value)
-	}
+	fmt.Println(maxArea([]int{2,3,10,5,7,8,9}))
 }
