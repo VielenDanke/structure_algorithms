@@ -111,6 +111,20 @@ func (ll *LinkedList) Insert(idx int, val string) (ok bool) {
 		ok = true
 		return
 	}
+	n := &Node{val: val}
+	counter := 0
+	fNode := ll.head
+	for {
+		counter++
+		if idx == counter {
+			temp := fNode.next
+			fNode.next = n
+			n.next = temp
+			ok = true
+			break
+		}
+		fNode = fNode.next
+	}
 	ll.length++
 	return
 }
