@@ -1,7 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"os"
+)
 
 func main() {
-	fmt.Println(maxArea([]int{2,3,10,5,7,8,9}))
+	file, err := os.Open("text.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	data, err := readAllBytes(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	words, err := maxFrequentWords(data, 5)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(words)
 }

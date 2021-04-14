@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"io/ioutil"
 )
@@ -11,15 +12,19 @@ type Node struct {
 	value int
 }
 
-func maxFrequentWords(reader io.Reader, amount int) ([]*Node, error) {
+func (n Node) String() string {
+	return fmt.Sprintf("Word: %s, amount: %d", n.key, n.value)
+}
+
+func readAllBytes(reader io.Reader) ([]byte, error) {
+	return ioutil.ReadAll(reader)
+}
+
+func maxFrequentWords(data []byte, amount int) ([]*Node, error) {
 	if amount == 0 {
 		return []*Node{}, nil
 	}
 	nodes := make([]*Node, 0)
-	data, readAllErr := ioutil.ReadAll(reader)
-	if readAllErr != nil {
-		return nil, readAllErr
-	}
 	filteredBuff := bytes.NewBuffer(make([]byte, 0))
 	dataBuff := bytes.NewBuffer(data)
 	isWrongLetterRepeated := false
