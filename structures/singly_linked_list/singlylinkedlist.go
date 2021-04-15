@@ -1,8 +1,14 @@
 package main
 
+import "fmt"
+
 type Node struct {
 	val  string
 	next *Node
+}
+
+func (n Node) String() string {
+	return n.val
 }
 
 type LinkedList struct {
@@ -106,7 +112,7 @@ func (ll *LinkedList) Insert(idx int, val string) (ok bool) {
 	if idx < 0 || idx > ll.length {
 		return
 	}
-	if idx == ll.length {
+	if idx == ll.length - 1 {
 		ll.Push(val)
 		ok = true
 		ll.length++
@@ -130,6 +136,67 @@ func (ll *LinkedList) Insert(idx int, val string) (ok bool) {
 	ok = true
 	ll.length++
 	return
+}
+
+func (ll *LinkedList) Remove(idx int) (*Node, bool) {
+	if idx < 0 || idx > ll.length {
+		return nil, false
+	}
+	if idx == 0 {
+		return ll.Shift()
+	}
+	if idx == ll.length - 1 {
+		return ll.Pop()
+	}
+	prevNode, isFound := ll.Get(idx - 1)
+	if !isFound {
+		return nil, isFound
+	}
+	removed := prevNode.next
+	prevNode.next = removed.next
+	ll.length--
+	return removed, true
+}
+
+func (ll *LinkedList) Reverse() {
+	var next, prev *Node
+	curr := ll.head
+	ll.head = ll.tail
+	ll.tail = curr
+	// 13 27 71 32
+	/*
+	1.
+	next = 27
+	curr.next = nil
+	prev = 13
+	curr = 27
+	2.
+	next = 71
+	curr.next = 13
+	prev = 27
+	curr = 71
+	3.
+	next = 32
+	curr.next = 27
+	prev = 71
+	curr = 32
+	 */
+	for i := 0; i < ll.length; i++ {
+		next = curr.next
+		curr.next = prev
+		prev = curr
+		curr = next
+	}
+}
+
+func (ll *LinkedList) Print() {
+	var arr []*Node
+	current := ll.head
+	for current != nil {
+		arr = append(arr, current)
+		current = current.next
+	}
+	fmt.Println(arr)
 }
 
 func NewLinkedList() *LinkedList {

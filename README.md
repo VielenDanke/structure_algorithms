@@ -24,3 +24,15 @@ Access - O(1)
   Quick                  | O(N logN)               (O(N logN) - O(N^2))     | O(logN)          |
   Radix (mostly numbers) | O(NK)                   (O(NK) - O(NK))          | O(N + K)         |  
 ````
+
+### Structures
+````
+ Sort type               | Insertion |  Removal  | Searching | Access |
+------------------------ | --------- | --------- | --------- | ------ |
+  Singly linked list     |   O(1)    | O(1)-O(N) |    O(N)   |  O(N)  |
+  Insertion              |           |           |           |        |
+  Selection              |           |           |           |        |
+  Merge                  |           |           |           |        |
+  Quick                  |           |           |           |        |
+  Radix (mostly numbers) |           |           |           |        |  
+````
