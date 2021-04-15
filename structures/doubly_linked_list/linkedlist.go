@@ -146,3 +146,26 @@ func (dl *LinkedList) Insert(idx int, val interface{}) bool {
 	dl.length++
 	return true
 }
+
+func (dl *LinkedList) Remove(idx int) (foundNode *Node, isFound bool) {
+	if idx < 0 || idx >= dl.length {
+		return
+	}
+	if idx == 0 {
+		foundNode, isFound = dl.Shift()
+	} else if idx == dl.length-1 {
+		foundNode, isFound = dl.Pop()
+	} else {
+		foundNode, isFound = dl.Get(idx)
+		if !isFound {
+			return
+		}
+		foundNode.prev.next = foundNode.next
+		foundNode.next.prev = foundNode.prev
+		foundNode.prev = nil
+		foundNode.next = nil
+	}
+	dl.length--
+	isFound = true
+	return
+}

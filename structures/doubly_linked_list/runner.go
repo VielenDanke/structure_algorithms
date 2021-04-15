@@ -17,15 +17,7 @@ func main() {
 
 	fmt.Println(dl.String())
 
-	dl.Set(15, 13)
-
+	removed, isRemoved := dl.Remove(1)
+	fmt.Println(removed.val, isRemoved)
 	fmt.Println(dl.String())
-
-	dl.Insert(2, 132)
-
-	fmt.Println(dl.String())
-
-	isInserted := dl.Insert(51, 123)
-
-	fmt.Println(isInserted)
 }

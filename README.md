@@ -30,7 +30,7 @@ Access - O(1)
  Sort type               | Insertion |  Removal  | Searching | Access |
 ------------------------ | --------- | --------- | --------- | ------ |
   Singly linked list     |   O(1)    | O(1)-O(N) |    O(N)   |  O(N)  |
-  Insertion              |           |           |           |        |
+  Linked list            |   O(1)    |    O(1)   |    O(N)   |  O(N)  |
   Selection              |           |           |           |        |
   Merge                  |           |           |           |        |
   Quick                  |           |           |           |        |
