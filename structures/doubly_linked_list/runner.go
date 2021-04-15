@@ -17,7 +17,7 @@ func main() {
 
 	fmt.Println(dl.String())
 
-	dl.Pop()
-
+	n, _ := dl.Shift()
+	fmt.Println(n)
 	fmt.Println(dl.String())
 }

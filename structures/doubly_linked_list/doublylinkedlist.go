@@ -65,3 +65,20 @@ func (dl *DoublyLinkedList) Pop() (*Node, bool) {
 	dl.length--
 	return remove, true
 }
+
+func (dl *DoublyLinkedList) Shift() (*Node, bool) {
+	if dl.length == 0 {
+		return nil, false
+	}
+	head := dl.head
+	if dl.length == 1 {
+		dl.head = nil
+		dl.tail = nil
+	} else {
+		dl.head = head.next
+		dl.head.prev = nil
+		head.next = nil
+		dl.length--
+	}
+	return head, true
+}
