@@ -3,12 +3,8 @@ package main
 import "fmt"
 
 type Node struct {
-	val  string
+	val  interface{}
 	next *Node
-}
-
-func (n Node) String() string {
-	return n.val
 }
 
 type LinkedList struct {
@@ -17,7 +13,7 @@ type LinkedList struct {
 	length int
 }
 
-func (ll *LinkedList) Push(val string) {
+func (ll *LinkedList) Push(val interface{}) {
 	node := &Node{val: val}
 	if ll.head == nil {
 		ll.head = node
@@ -68,7 +64,7 @@ func (ll *LinkedList) Shift() (toFind *Node, isFound bool) {
 	return toFind, isFound
 }
 
-func (ll *LinkedList) Unshift(val string) {
+func (ll *LinkedList) Unshift(val interface{}) {
 	if ll.length == 0 {
 		ll.Push(val)
 	} else {
@@ -99,7 +95,7 @@ func (ll *LinkedList) Get(idx int) (toFound *Node, isFound bool) {
 	return toFound, isFound
 }
 
-func (ll *LinkedList) Set(idx int, val string) (ok bool) {
+func (ll *LinkedList) Set(idx int, val interface{}) (ok bool) {
 	fNode, ok := ll.Get(idx)
 	if !ok {
 		return ok
@@ -108,7 +104,7 @@ func (ll *LinkedList) Set(idx int, val string) (ok bool) {
 	return ok
 }
 
-func (ll *LinkedList) Insert(idx int, val string) (ok bool) {
+func (ll *LinkedList) Insert(idx int, val interface{}) (ok bool) {
 	if idx < 0 || idx > ll.length {
 		return
 	}

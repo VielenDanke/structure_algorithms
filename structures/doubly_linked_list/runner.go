@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	dl := &DoublyLinkedList{}
+	dl := &LinkedList{}
 
 	dl.Push(13)
 
@@ -17,7 +17,15 @@ func main() {
 
 	fmt.Println(dl.String())
 
-	n, _ := dl.Shift()
-	fmt.Println(n)
+	dl.Set(15, 13)
+
 	fmt.Println(dl.String())
+
+	dl.Insert(2, 132)
+
+	fmt.Println(dl.String())
+
+	isInserted := dl.Insert(51, 123)
+
+	fmt.Println(isInserted)
 }
