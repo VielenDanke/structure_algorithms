@@ -13,10 +13,6 @@ type LinkedListStack struct {
 	length int
 }
 
-func NewLinkedListStack() *LinkedListStack {
-	return &LinkedListStack{}
-}
-
 func (lls *LinkedListStack) Push(val interface{}) {
 	newNode := &Node{val: val}
 	if lls.length == 0 {

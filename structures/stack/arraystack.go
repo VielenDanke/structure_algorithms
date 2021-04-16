@@ -6,10 +6,6 @@ type ArrayStack struct {
 	elements []interface{}
 }
 
-func NewArrayStack() *ArrayStack {
-	return &ArrayStack{elements: make([]interface{}, 0)}
-}
-
 func (as *ArrayStack) Push(val interface{}) {
 	as.elements = append(as.elements, val)
 }

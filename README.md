@@ -31,8 +31,8 @@ Access - O(1)
 ------------------------ | --------- | --------- | --------- | ------ |
   Singly linked list     |   O(1)    | O(1)-O(N) |    O(N)   |  O(N)  |
   Linked list            |   O(1)    |    O(1)   |    O(N)   |  O(N)  |
-  Selection              |           |           |           |        |
-  Merge                  |           |           |           |        |
+  Stack                  |   O(1)    |    O(1)   |    O(N)   |  O(N)  |
+  Queue                  |   O(1)    |    O(1)   |    O(N)   |  O(N)  |
   Quick                  |           |           |           |        |
   Radix (mostly numbers) |           |           |           |        |  
 ````
