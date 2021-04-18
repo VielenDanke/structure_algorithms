@@ -104,6 +104,9 @@ func (bt *binaryTree) insertNode(n *node, toInsert *node) {
 		n = toInsert
 		return
 	}
+	if n.val == toInsert.val {
+		return
+	}
 	if bt.sortFunc(n.val, toInsert.val) {
 		if n.left == nil {
 			n.left = toInsert

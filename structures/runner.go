@@ -2,16 +2,22 @@ package main
 
 import (
 	"fmt"
-	"github.com/vielendanke/structure_algorithms/structures/linked_list/doubly_linked_list"
-	"github.com/vielendanke/structure_algorithms/structures/stack"
+	"github.com/vielendanke/structure_algorithms/structures/tree"
 )
 
 func main() {
-	var st stack.Stack
-	st = doubly_linked_list.NewDoublyLinkedList()
-	st.Push(1)
-	st.Push(2)
-	st.Push(3)
-	pop, _ := st.Pop()
-	fmt.Println(pop)
+	bt := tree.NewBinaryTree(func(left interface{}, right interface{}) bool {
+		l := left.(int)
+		r := right.(int)
+		return l > r
+	})
+
+	bt.Insert(13)
+	bt.Insert(3)
+	bt.Insert(15)
+	bt.Insert(3)
+	bt.Insert(47)
+	bt.Insert(1)
+
+	fmt.Println(bt.DepthForSearchPreOrder())
 }
