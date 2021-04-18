@@ -17,6 +17,14 @@ func NewSinglyLinkedList() *singlyLinkedList {
 	return &singlyLinkedList{}
 }
 
+func (ll *singlyLinkedList) Enqueue(val interface{}) {
+	ll.Push(val)
+}
+
+func (ll *singlyLinkedList) Dequeue() (interface{}, bool) {
+	return ll.Shift()
+}
+
 func (ll *singlyLinkedList) Push(val interface{}) {
 	n := &node{val: val}
 	if ll.head == nil {
