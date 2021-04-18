@@ -1,18 +1,18 @@
 package queue
 
-type Node struct {
+type node struct {
 	val interface{}
-	next *Node
+	next *node
 }
 
-type LinkedQueue struct {
-	first *Node
-	last *Node
+type linkedQueue struct {
+	first *node
+	last *node
 	length int
 }
 
-func (lq *LinkedQueue) Enqueue(val interface{}) {
-	n := &Node{val: val}
+func (lq *linkedQueue) Enqueue(val interface{}) {
+	n := &node{val: val}
 	if lq.length == 0 {
 		lq.first = n
 		lq.last = n
@@ -23,7 +23,7 @@ func (lq *LinkedQueue) Enqueue(val interface{}) {
 	lq.length++
 }
 
-func (lq *LinkedQueue) Dequeue() (interface{}, bool) {
+func (lq *linkedQueue) Dequeue() (interface{}, bool) {
 	if lq.length == 0 {
 		return nil, false
 	}
@@ -36,4 +36,8 @@ func (lq *LinkedQueue) Dequeue() (interface{}, bool) {
 	}
 	lq.length--
 	return n.val, true
+}
+
+func (lq *linkedQueue) Length() int {
+	return lq.length
 }

@@ -1,8 +1,15 @@
 package linked_list
 
+import (
+	"github.com/vielendanke/structure_algorithms/structures/common"
+	"github.com/vielendanke/structure_algorithms/structures/queue"
+	"github.com/vielendanke/structure_algorithms/structures/stack"
+)
+
 type LinkedList interface {
-	Push(val interface{})
-	Pop() (interface{}, bool)
+	common.StructureLength
+	stack.Stack
+	queue.Queue
 	Shift() (interface{}, bool)
 	Unshift(val interface{})
 	Get(idx int) (interface{}, bool)

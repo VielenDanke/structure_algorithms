@@ -2,19 +2,23 @@ package stack
 
 import "fmt"
 
-type Node struct {
+type node struct {
 	val  interface{}
-	next *Node
+	next *node
 }
 
-type LinkedListStack struct {
-	first  *Node
-	last   *Node
+type linkedStack struct {
+	first  *node
+	last   *node
 	length int
 }
 
-func (lls *LinkedListStack) Push(val interface{}) {
-	newNode := &Node{val: val}
+func NewLinkedStack() *linkedStack {
+	return &linkedStack{}
+}
+
+func (lls *linkedStack) Push(val interface{}) {
+	newNode := &node{val: val}
 	if lls.length == 0 {
 		lls.first = newNode
 		lls.last = newNode
@@ -26,7 +30,7 @@ func (lls *LinkedListStack) Push(val interface{}) {
 	lls.length++
 }
 
-func (lls *LinkedListStack) Pop() (val interface{}, isFound bool) {
+func (lls *linkedStack) Pop() (val interface{}, isFound bool) {
 	if lls.length == 0 {
 		return
 	}
@@ -43,7 +47,11 @@ func (lls *LinkedListStack) Pop() (val interface{}, isFound bool) {
 	return
 }
 
-func (lls *LinkedListStack) String() string {
+func (lls *linkedStack) Length() int {
+	return lls.length
+}
+
+func (lls *linkedStack) String() string {
 	arr := make([]interface{}, 0)
 
 	curr := lls.first

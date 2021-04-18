@@ -1,14 +1,18 @@
 package queue
 
-type ArrayQueue struct {
+type arrayQueue struct {
 	elements []interface{}
 }
 
-func (aq *ArrayQueue) Enqueue(val interface{}) {
+func NewArrayQueue() *arrayQueue {
+	return &arrayQueue{}
+}
+
+func (aq *arrayQueue) Enqueue(val interface{}) {
 	aq.elements = append(aq.elements, val)
 }
 
-func (aq *ArrayQueue) Dequeue() (interface{}, bool) {
+func (aq *arrayQueue) Dequeue() (interface{}, bool) {
 	if len(aq.elements) == 0 {
 		return nil, false
 	}
@@ -16,6 +20,10 @@ func (aq *ArrayQueue) Dequeue() (interface{}, bool) {
 	return aq.elements[0], true
 }
 
-func (aq *ArrayQueue) removeElement() {
+func (aq *arrayQueue) Length() int {
+	return len(aq.elements)
+}
+
+func (aq *arrayQueue) removeElement() {
 	aq.elements = aq.elements[1:len(aq.elements)]
 }

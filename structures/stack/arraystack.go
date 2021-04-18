@@ -2,15 +2,19 @@ package stack
 
 import "fmt"
 
-type ArrayStack struct {
+type arrayStack struct {
 	elements []interface{}
 }
 
-func (as *ArrayStack) Push(val interface{}) {
+func NewArrayStack() *arrayStack {
+	return &arrayStack{}
+}
+
+func (as *arrayStack) Push(val interface{}) {
 	as.elements = append(as.elements, val)
 }
 
-func (as *ArrayStack) Pop() (val interface{}, isFound bool) {
+func (as *arrayStack) Pop() (val interface{}, isFound bool) {
 	if len(as.elements) == 0 {
 		return
 	}
@@ -19,10 +23,14 @@ func (as *ArrayStack) Pop() (val interface{}, isFound bool) {
 	return val, !isFound
 }
 
-func (as *ArrayStack) removeElemAfterPop() {
-	as.elements = as.elements[0:len(as.elements) - 1]
+func (as *arrayStack) Length() int {
+	return len(as.elements)
 }
 
-func (as *ArrayStack) String() string {
+func (as *arrayStack) removeElemAfterPop() {
+	as.elements = as.elements[0 : len(as.elements)-1]
+}
+
+func (as *arrayStack) String() string {
 	return fmt.Sprintf("%v", as.elements)
 }

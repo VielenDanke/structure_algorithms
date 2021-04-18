@@ -2,50 +2,54 @@ package singly_linked_list
 
 import "fmt"
 
-type Node struct {
+type node struct {
 	val  interface{}
-	next *Node
+	next *node
 }
 
-type SinglyLinkedList struct {
-	head   *Node
-	tail   *Node
+type singlyLinkedList struct {
+	head   *node
+	tail   *node
 	length int
 }
 
-func (ll *SinglyLinkedList) Push(val interface{}) {
-	node := &Node{val: val}
+func NewSinglyLinkedList() *singlyLinkedList {
+	return &singlyLinkedList{}
+}
+
+func (ll *singlyLinkedList) Push(val interface{}) {
+	n := &node{val: val}
 	if ll.head == nil {
-		ll.head = node
+		ll.head = n
 		ll.tail = ll.head
 	} else {
-		ll.tail.next = node
+		ll.tail.next = n
 		ll.tail = ll.tail.next
 	}
 	ll.length++
 }
 
-func (ll *SinglyLinkedList) Pop() (interface{}, bool) {
-	node, isFound := ll.popNode()
+func (ll *singlyLinkedList) Pop() (interface{}, bool) {
+	n, isFound := ll.popNode()
 	if !isFound {
 		return nil, false
 	}
-	return node.val, true
+	return n.val, true
 }
 
-func (ll *SinglyLinkedList) Shift() (interface{}, bool) {
-	node, isFound := ll.shiftNode()
+func (ll *singlyLinkedList) Shift() (interface{}, bool) {
+	n, isFound := ll.shiftNode()
 	if !isFound {
 		return nil, false
 	}
-	return node.val, true
+	return n.val, true
 }
 
-func (ll *SinglyLinkedList) Unshift(val interface{}) {
+func (ll *singlyLinkedList) Unshift(val interface{}) {
 	if ll.length == 0 {
 		ll.Push(val)
 	} else {
-		n := &Node{val: val}
+		n := &node{val: val}
 		tempHead := ll.head
 		ll.head = n
 		ll.head.next = tempHead
@@ -53,15 +57,15 @@ func (ll *SinglyLinkedList) Unshift(val interface{}) {
 	ll.length++
 }
 
-func (ll *SinglyLinkedList) Get(idx int) (interface{}, bool) {
-	node, isFound := ll.getNode(idx)
+func (ll *singlyLinkedList) Get(idx int) (interface{}, bool) {
+	n, isFound := ll.getNode(idx)
 	if !isFound {
 		return nil, false
 	}
-	return node.val, true
+	return n.val, true
 }
 
-func (ll *SinglyLinkedList) Set(idx int, val interface{}) (ok bool) {
+func (ll *singlyLinkedList) Set(idx int, val interface{}) (ok bool) {
 	fNode, ok := ll.getNode(idx)
 	if !ok {
 		return ok
@@ -70,7 +74,7 @@ func (ll *SinglyLinkedList) Set(idx int, val interface{}) (ok bool) {
 	return ok
 }
 
-func (ll *SinglyLinkedList) Insert(idx int, val interface{}) (ok bool) {
+func (ll *singlyLinkedList) Insert(idx int, val interface{}) (ok bool) {
 	if idx < 0 || idx > ll.length {
 		return
 	}
@@ -91,7 +95,7 @@ func (ll *SinglyLinkedList) Insert(idx int, val interface{}) (ok bool) {
 		ok = false
 		return
 	}
-	n := &Node{val: val}
+	n := &node{val: val}
 	temp := prev.next
 	prev.next = n
 	n.next = temp
@@ -100,16 +104,16 @@ func (ll *SinglyLinkedList) Insert(idx int, val interface{}) (ok bool) {
 	return
 }
 
-func (ll *SinglyLinkedList) Remove(idx int) (interface{}, bool) {
-	node, isRemoved := ll.removeNode(idx)
+func (ll *singlyLinkedList) Remove(idx int) (interface{}, bool) {
+	n, isRemoved := ll.removeNode(idx)
 	if !isRemoved {
 		return nil, false
 	}
-	return node.val, true
+	return n.val, true
 }
 
-func (ll *SinglyLinkedList) Reverse() {
-	var next, prev *Node
+func (ll *singlyLinkedList) Reverse() {
+	var next, prev *node
 	curr := ll.head
 	ll.head = ll.tail
 	ll.tail = curr
@@ -121,7 +125,7 @@ func (ll *SinglyLinkedList) Reverse() {
 	}
 }
 
-func (ll *SinglyLinkedList) popNode() (toFind *Node, isFound bool) {
+func (ll *singlyLinkedList) popNode() (toFind *node, isFound bool) {
 	if ll.length == 0 {
 		return toFind, isFound
 	}
@@ -146,7 +150,7 @@ func (ll *SinglyLinkedList) popNode() (toFind *Node, isFound bool) {
 	return toFind, isFound
 }
 
-func (ll *SinglyLinkedList) shiftNode() (toFind *Node, isFound bool) {
+func (ll *singlyLinkedList) shiftNode() (toFind *node, isFound bool) {
 	if ll.length == 0 {
 		return toFind, isFound
 	}
@@ -160,7 +164,7 @@ func (ll *SinglyLinkedList) shiftNode() (toFind *Node, isFound bool) {
 	return toFind, isFound
 }
 
-func (ll *SinglyLinkedList) getNode(idx int) (toFound *Node, isFound bool) {
+func (ll *singlyLinkedList) getNode(idx int) (toFound *node, isFound bool) {
 	if ll.length == 0 {
 		return toFound, isFound
 	}
@@ -179,7 +183,7 @@ func (ll *SinglyLinkedList) getNode(idx int) (toFound *Node, isFound bool) {
 	return toFound, isFound
 }
 
-func (ll *SinglyLinkedList) removeNode(idx int) (*Node, bool) {
+func (ll *singlyLinkedList) removeNode(idx int) (*node, bool) {
 	if idx < 0 || idx > ll.length {
 		return nil, false
 	}
@@ -199,7 +203,11 @@ func (ll *SinglyLinkedList) removeNode(idx int) (*Node, bool) {
 	return removed, true
 }
 
-func (ll *SinglyLinkedList) String() string {
+func (ll *singlyLinkedList) Length() int {
+	return ll.length
+}
+
+func (ll *singlyLinkedList) String() string {
 	arr := make([]interface{}, 0)
 	current := ll.head
 	for current != nil {

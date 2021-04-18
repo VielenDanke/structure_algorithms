@@ -2,20 +2,32 @@ package doubly_linked_list
 
 import "fmt"
 
-type Node struct {
-	prev *Node
-	next *Node
+type node struct {
+	prev *node
+	next *node
 	val  interface{}
 }
 
-type DoublyLinkedList struct {
-	head   *Node
-	tail   *Node
+type doublyLinkedList struct {
+	head   *node
+	tail   *node
 	length int
 }
 
-func (dl *DoublyLinkedList) Push(val interface{}) {
-	n := &Node{val: val}
+func NewDoublyLinkedList() *doublyLinkedList {
+	return &doublyLinkedList{}
+}
+
+func (dl *doublyLinkedList) Enqueue(val interface{}) {
+	dl.Push(val)
+}
+
+func (dl *doublyLinkedList) Dequeue() (interface{}, bool) {
+	return dl.Shift()
+}
+
+func (dl *doublyLinkedList) Push(val interface{}) {
+	n := &node{val: val}
 	if dl.head == nil {
 		dl.head = n
 		dl.tail = n
@@ -27,24 +39,24 @@ func (dl *DoublyLinkedList) Push(val interface{}) {
 	dl.length++
 }
 
-func (dl *DoublyLinkedList) Pop() (interface{}, bool) {
-	node, isPopped := dl.popNode()
+func (dl *doublyLinkedList) Pop() (interface{}, bool) {
+	n, isPopped := dl.popNode()
 	if !isPopped {
 		return nil, false
 	}
-	return node.val, true
+	return n.val, true
 }
 
-func (dl *DoublyLinkedList) Shift() (interface{}, bool) {
-	node, isShifted := dl.shiftNode()
+func (dl *doublyLinkedList) Shift() (interface{}, bool) {
+	n, isShifted := dl.shiftNode()
 	if !isShifted {
 		return nil, false
 	}
-	return node.val, true
+	return n.val, true
 }
 
-func (dl *DoublyLinkedList) Unshift(val interface{}) {
-	n := &Node{val: val}
+func (dl *doublyLinkedList) Unshift(val interface{}) {
+	n := &node{val: val}
 	if dl.length == 0 {
 		dl.head = n
 		dl.tail = n
@@ -57,15 +69,15 @@ func (dl *DoublyLinkedList) Unshift(val interface{}) {
 	dl.length++
 }
 
-func (dl *DoublyLinkedList) Get(idx int) (interface{}, bool) {
-	node, isFound := dl.getNode(idx)
+func (dl *doublyLinkedList) Get(idx int) (interface{}, bool) {
+	n, isFound := dl.getNode(idx)
 	if !isFound {
 		return nil, false
 	}
-	return node.val, true
+	return n.val, true
 }
 
-func (dl *DoublyLinkedList) Set(idx int, val interface{}) bool {
+func (dl *doublyLinkedList) Set(idx int, val interface{}) bool {
 	foundNode, isFound := dl.getNode(idx)
 	if !isFound {
 		return isFound
@@ -74,7 +86,7 @@ func (dl *DoublyLinkedList) Set(idx int, val interface{}) bool {
 	return isFound
 }
 
-func (dl *DoublyLinkedList) Insert(idx int, val interface{}) bool {
+func (dl *doublyLinkedList) Insert(idx int, val interface{}) bool {
 	if idx < 0 || idx > dl.length {
 		return false
 	}
@@ -83,7 +95,7 @@ func (dl *DoublyLinkedList) Insert(idx int, val interface{}) bool {
 	} else if idx == dl.length {
 		dl.Push(val)
 	} else {
-		newNode := &Node{val: val}
+		newNode := &node{val: val}
 		prevNode, isFound := dl.getNode(idx - 1)
 		if !isFound {
 			return isFound
@@ -98,21 +110,21 @@ func (dl *DoublyLinkedList) Insert(idx int, val interface{}) bool {
 	return true
 }
 
-func (dl *DoublyLinkedList) Remove(idx int) (interface{}, bool) {
-	node, isRemoved := dl.removeNode(idx)
+func (dl *doublyLinkedList) Remove(idx int) (interface{}, bool) {
+	n, isRemoved := dl.removeNode(idx)
 	if !isRemoved {
 		return nil, false
 	}
-	return node.val, true
+	return n.val, true
 }
 
-func (dl *DoublyLinkedList) Reverse() {
-	head := &Node{val: dl.tail.val}
-	tail := &Node{val: dl.head.val}
+func (dl *doublyLinkedList) Reverse() {
+	head := &node{val: dl.tail.val}
+	tail := &node{val: dl.head.val}
 	nextNode := dl.tail
 	tempHead := head
 	for i := 1; i < dl.length; i++ {
-		n := &Node{val: nextNode.prev.val}
+		n := &node{val: nextNode.prev.val}
 		tempHead.next = n
 		n.prev = tempHead
 		if i == dl.length - 1 {
@@ -127,7 +139,7 @@ func (dl *DoublyLinkedList) Reverse() {
 	dl.tail = tail
 }
 
-func (dl *DoublyLinkedList) removeNode(idx int) (foundNode *Node, isFound bool) {
+func (dl *doublyLinkedList) removeNode(idx int) (foundNode *node, isFound bool) {
 	if idx < 0 || idx >= dl.length {
 		return
 	}
@@ -150,8 +162,8 @@ func (dl *DoublyLinkedList) removeNode(idx int) (foundNode *Node, isFound bool) 
 	return
 }
 
-func (dl *DoublyLinkedList) popNode() (*Node, bool) {
-	var remove *Node
+func (dl *doublyLinkedList) popNode() (*node, bool) {
+	var remove *node
 	if dl.head == nil {
 		return nil, false
 	}
@@ -168,7 +180,7 @@ func (dl *DoublyLinkedList) popNode() (*Node, bool) {
 	return remove, true
 }
 
-func (dl *DoublyLinkedList) shiftNode() (*Node, bool) {
+func (dl *doublyLinkedList) shiftNode() (*node, bool) {
 	if dl.length == 0 {
 		return nil, false
 	}
@@ -185,8 +197,8 @@ func (dl *DoublyLinkedList) shiftNode() (*Node, bool) {
 	return head, true
 }
 
-func (dl *DoublyLinkedList) getNode(idx int) (*Node, bool) {
-	var foundNode *Node
+func (dl *doublyLinkedList) getNode(idx int) (*node, bool) {
+	var foundNode *node
 	if idx < 0 || idx >= dl.length {
 		return nil, false
 	}
@@ -211,7 +223,11 @@ func (dl *DoublyLinkedList) getNode(idx int) (*Node, bool) {
 	return foundNode, true
 }
 
-func (dl *DoublyLinkedList) String() string {
+func (dl *doublyLinkedList) Length() int {
+	return dl.length
+}
+
+func (dl *doublyLinkedList) String() string {
 	arr := make([]interface{}, 0)
 	curr := dl.head
 	for curr != nil {

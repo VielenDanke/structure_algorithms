@@ -26,6 +26,7 @@ Access - O(1)
 ````
 
 ### Structures
+Average complexity
 ````
  Sort type               | Insertion |  Removal  | Searching | Access |
 ------------------------ | --------- | --------- | --------- | ------ |
@@ -33,6 +34,6 @@ Access - O(1)
   Linked list            |   O(1)    |    O(1)   |    O(N)   |  O(N)  |
   Stack                  |   O(1)    |    O(1)   |    O(N)   |  O(N)  |
   Queue                  |   O(1)    |    O(1)   |    O(N)   |  O(N)  |
-  Quick                  |           |           |           |        |
+  Binary Tree            |  O(logN)  |  O(logN)  |   O(logN) | O(logN)|
   Radix (mostly numbers) |           |           |           |        |  
 ````
