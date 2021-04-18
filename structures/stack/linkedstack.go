@@ -47,13 +47,12 @@ func (lls *linkedStack) Pop() (val interface{}, isFound bool) {
 	return
 }
 
-func (lls *linkedStack) Length() int {
+func (lls *linkedStack) Size() int {
 	return lls.length
 }
 
 func (lls *linkedStack) String() string {
 	arr := make([]interface{}, 0)
-
 	curr := lls.first
 	for curr != nil {
 		arr = append(arr, curr.val)

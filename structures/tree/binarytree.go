@@ -1,6 +1,9 @@
 package tree
 
-import "github.com/vielendanke/structure_algorithms/structures/queue"
+import (
+	"fmt"
+	"github.com/vielendanke/structure_algorithms/structures/queue"
+)
 
 type node struct {
 	val   interface{}
@@ -11,6 +14,7 @@ type node struct {
 type binaryTree struct {
 	root     *node
 	sortFunc func(left interface{}, right interface{}) bool
+	length   int
 }
 
 func NewBinaryTree(sortFunc func(left interface{}, right interface{}) bool) *binaryTree {
@@ -24,6 +28,7 @@ func (bt *binaryTree) Insert(val interface{}) {
 	} else {
 		bt.insertNode(bt.root, n)
 	}
+	bt.length++
 }
 
 func (bt *binaryTree) Contains(val interface{}) bool {
@@ -40,7 +45,7 @@ func (bt *binaryTree) BreadthForSearch() (res []interface{}) {
 	}
 	q := queue.NewArrayQueue()
 	q.Enqueue(bt.root)
-	for q.Length() != 0 {
+	for q.Size() != 0 {
 		elem, _ := q.Dequeue()
 		n := elem.(*node)
 		res = append(res, n.val)
@@ -69,28 +74,14 @@ func (bt *binaryTree) DepthForSearchInOrder() (res []interface{}) {
 	return
 }
 
-func preOrderDFS(n *node, arr *[]interface{}) {
-	if n != nil {
-		*arr = append(*arr, n.val)
-		preOrderDFS(n.left, arr)
-		preOrderDFS(n.right, arr)
-	}
+func (bt *binaryTree) Size() int {
+	return bt.length
 }
 
-func postOrderDFS(n *node, arr *[]interface{}) {
-	if n != nil {
-		postOrderDFS(n.left, arr)
-		postOrderDFS(n.right, arr)
-		*arr = append(*arr, n.val)
-	}
-}
-
-func inOrderDFS(n *node, arr *[]interface{}) {
-	if n != nil {
-		inOrderDFS(n.left, arr)
-		*arr = append(*arr, n.val)
-		inOrderDFS(n.right, arr)
-	}
+func (bt *binaryTree) String() string {
+	var arr []interface{}
+	preOrderDFS(bt.root, &arr)
+	return fmt.Sprintf("%v", arr)
 }
 
 func (bt *binaryTree) findNode(n *node, val interface{}) (res bool) {
@@ -127,5 +118,29 @@ func (bt *binaryTree) insertNode(n *node, toInsert *node) {
 		} else {
 			bt.insertNode(n.right, toInsert)
 		}
+	}
+}
+
+func preOrderDFS(n *node, arr *[]interface{}) {
+	if n != nil {
+		*arr = append(*arr, n.val)
+		preOrderDFS(n.left, arr)
+		preOrderDFS(n.right, arr)
+	}
+}
+
+func postOrderDFS(n *node, arr *[]interface{}) {
+	if n != nil {
+		postOrderDFS(n.left, arr)
+		postOrderDFS(n.right, arr)
+		*arr = append(*arr, n.val)
+	}
+}
+
+func inOrderDFS(n *node, arr *[]interface{}) {
+	if n != nil {
+		inOrderDFS(n.left, arr)
+		*arr = append(*arr, n.val)
+		inOrderDFS(n.right, arr)
 	}
 }

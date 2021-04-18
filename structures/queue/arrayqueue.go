@@ -1,5 +1,7 @@
 package queue
 
+import "fmt"
+
 type arrayQueue struct {
 	elements []interface{}
 }
@@ -20,8 +22,12 @@ func (aq *arrayQueue) Dequeue() (interface{}, bool) {
 	return aq.elements[0], true
 }
 
-func (aq *arrayQueue) Length() int {
+func (aq *arrayQueue) Size() int {
 	return len(aq.elements)
+}
+
+func (aq *arrayQueue) String() string {
+	return fmt.Sprintf("%v", aq.elements)
 }
 
 func (aq *arrayQueue) removeElement() {

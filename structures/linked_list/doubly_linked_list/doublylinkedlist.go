@@ -139,6 +139,20 @@ func (dl *doublyLinkedList) Reverse() {
 	dl.tail = tail
 }
 
+func (dl *doublyLinkedList) Size() int {
+	return dl.length
+}
+
+func (dl *doublyLinkedList) String() string {
+	arr := make([]interface{}, 0)
+	curr := dl.head
+	for curr != nil {
+		arr = append(arr, curr.val)
+		curr = curr.next
+	}
+	return fmt.Sprintf("%v", arr)
+}
+
 func (dl *doublyLinkedList) removeNode(idx int) (foundNode *node, isFound bool) {
 	if idx < 0 || idx >= dl.length {
 		return
@@ -221,18 +235,4 @@ func (dl *doublyLinkedList) getNode(idx int) (*node, bool) {
 		}
 	}
 	return foundNode, true
-}
-
-func (dl *doublyLinkedList) Length() int {
-	return dl.length
-}
-
-func (dl *doublyLinkedList) String() string {
-	arr := make([]interface{}, 0)
-	curr := dl.head
-	for curr != nil {
-		arr = append(arr, curr.val)
-		curr = curr.next
-	}
-	return fmt.Sprintf("%v", arr)
 }

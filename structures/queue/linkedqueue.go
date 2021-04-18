@@ -1,5 +1,7 @@
 package queue
 
+import "fmt"
+
 type node struct {
 	val interface{}
 	next *node
@@ -38,6 +40,16 @@ func (lq *linkedQueue) Dequeue() (interface{}, bool) {
 	return n.val, true
 }
 
-func (lq *linkedQueue) Length() int {
+func (lq *linkedQueue) Size() int {
 	return lq.length
+}
+
+func (lq *linkedQueue) String() string {
+	var arr []interface{}
+	current := lq.first
+	for current != nil {
+		arr = append(arr, current.val)
+		current = current.next
+	}
+	return fmt.Sprintf("%v", arr)
 }

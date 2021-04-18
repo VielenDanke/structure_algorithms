@@ -6,7 +6,7 @@ import (
 )
 
 type LinkedList interface {
-	common.StructureLength
+	common.StructureSize
 	stack.Stack
 	Shift() (interface{}, bool)
 	Unshift(val interface{})

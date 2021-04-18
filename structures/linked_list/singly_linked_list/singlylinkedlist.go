@@ -133,6 +133,20 @@ func (ll *singlyLinkedList) Reverse() {
 	}
 }
 
+func (ll *singlyLinkedList) Size() int {
+	return ll.length
+}
+
+func (ll *singlyLinkedList) String() string {
+	arr := make([]interface{}, 0)
+	current := ll.head
+	for current != nil {
+		arr = append(arr, current.val)
+		current = current.next
+	}
+	return fmt.Sprintf("%v", arr)
+}
+
 func (ll *singlyLinkedList) popNode() (toFind *node, isFound bool) {
 	if ll.length == 0 {
 		return toFind, isFound
@@ -209,18 +223,4 @@ func (ll *singlyLinkedList) removeNode(idx int) (*node, bool) {
 	prevNode.next = removed.next
 	ll.length--
 	return removed, true
-}
-
-func (ll *singlyLinkedList) Length() int {
-	return ll.length
-}
-
-func (ll *singlyLinkedList) String() string {
-	arr := make([]interface{}, 0)
-	current := ll.head
-	for current != nil {
-		arr = append(arr, current.val)
-		current = current.next
-	}
-	return fmt.Sprintf("%v", arr)
 }
