@@ -35,5 +35,5 @@ Average complexity
   Stack                  |   O(1)    |    O(1)   |    O(N)   |  O(N)  |
   Queue                  |   O(1)    |    O(1)   |    O(N)   |  O(N)  |
   Binary Tree            |  O(logN)  |  O(logN)  |   O(logN) | O(logN)|
-  Radix (mostly numbers) |           |           |           |        |  
+  Binary Heaps           |  O(logN)  |  O(logN)  |    O(N)   |  O(N)  |  
 ````
