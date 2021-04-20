@@ -1,13 +1,8 @@
-package linked_list
-
-import (
-	"github.com/vielendanke/structure_algorithms/structures/common"
-	"github.com/vielendanke/structure_algorithms/structures/stack"
-)
+package common
 
 type LinkedList interface {
-	common.StructureSize
-	stack.Stack
+	StructureSize
+	Stack
 	Shift() (interface{}, bool)
 	Unshift(val interface{})
 	Get(idx int) (interface{}, bool)
