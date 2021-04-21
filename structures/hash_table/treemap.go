@@ -2,6 +2,7 @@ package hashtable
 
 import (
 	"fmt"
+	"github.com/vielendanke/structure_algorithms/structures/common"
 	"github.com/vielendanke/structure_algorithms/structures/queue"
 )
 
@@ -14,17 +15,17 @@ type treeNode struct {
 	right *treeNode
 }
 
-type treeMap struct {
+type binaryTreeMap struct {
 	root     *treeNode
 	sortFunc sort
 	length   int
 }
 
-func NewTreeMap(sortFunc sort) *treeMap {
-	return &treeMap{sortFunc: sortFunc}
+func NewBinaryTreeMap(sortFunc sort) common.Map {
+	return &binaryTreeMap{sortFunc: sortFunc}
 }
 
-func (bt *treeMap) Put(key interface{}, value interface{}) {
+func (bt *binaryTreeMap) Put(key interface{}, value interface{}) {
 	n := &treeNode{key: key, value: value}
 	if bt.root == nil {
 		bt.root = n
@@ -34,18 +35,26 @@ func (bt *treeMap) Put(key interface{}, value interface{}) {
 	bt.length++
 }
 
-func (bt *treeMap) Get(key interface{}) (val interface{}) {
+func (bt *binaryTreeMap) Get(key interface{}) (val interface{}) {
 	if bt.root == nil {
 		return nil
 	}
 	if bt.length == 1 {
-		return bt.sortFunc(bt.root.key, key)
+		if !key.(common.EqualRule).Equal(bt.root.key) {
+			return nil
+		} else {
+			return bt.root.value
+		}
 	} else {
-		return bt.findNode(bt.root, key).value
+		n := bt.findNode(bt.root, key)
+		if n == nil {
+			return nil
+		}
+		return n.value
 	}
 }
 
-func (bt *treeMap) Contains(key interface{}) (res bool) {
+func (bt *binaryTreeMap) Contains(key interface{}) (res bool) {
 	if bt.root == nil {
 		return false
 	} else {
@@ -57,7 +66,7 @@ func (bt *treeMap) Contains(key interface{}) (res bool) {
 	}
 }
 
-func (bt *treeMap) BreadthForSearch() (res []interface{}) {
+func (bt *binaryTreeMap) BreadthForSearch() (res []interface{}) {
 	if bt.root == nil {
 		return
 	}
@@ -77,36 +86,36 @@ func (bt *treeMap) BreadthForSearch() (res []interface{}) {
 	return
 }
 
-func (bt *treeMap) DepthForSearchPreOrder() (res []interface{}) {
+func (bt *binaryTreeMap) DepthForSearchPreOrder() (res []interface{}) {
 	preOrderDFS(bt.root, &res)
 	return
 }
 
-func (bt *treeMap) DepthForSearchPostOrder() (res []interface{}) {
+func (bt *binaryTreeMap) DepthForSearchPostOrder() (res []interface{}) {
 	postOrderDFS(bt.root, &res)
 	return
 }
 
-func (bt *treeMap) DepthForSearchInOrder() (res []interface{}) {
+func (bt *binaryTreeMap) DepthForSearchInOrder() (res []interface{}) {
 	inOrderDFS(bt.root, &res)
 	return
 }
 
-func (bt *treeMap) Size() int {
+func (bt *binaryTreeMap) Size() int {
 	return bt.length
 }
 
-func (bt *treeMap) String() string {
+func (bt *binaryTreeMap) String() string {
 	var arr []interface{}
 	preOrderDFS(bt.root, &arr)
 	return fmt.Sprintf("%v", arr)
 }
 
-func (bt *treeMap) findNode(n *treeNode, key interface{}) (res *treeNode) {
+func (bt *binaryTreeMap) findNode(n *treeNode, key interface{}) (res *treeNode) {
 	if n == nil {
 		return
 	}
-	if n.key == key {
+	if n.key.(common.EqualRule).Equal(key) {
 		return n
 	}
 	if bt.sortFunc(n.key, key) {
@@ -117,7 +126,7 @@ func (bt *treeMap) findNode(n *treeNode, key interface{}) (res *treeNode) {
 	return res
 }
 
-func (bt *treeMap) insertNode(n *treeNode, toInsert *treeNode) {
+func (bt *binaryTreeMap) insertNode(n *treeNode, toInsert *treeNode) {
 	if n == nil {
 		n = toInsert
 		return
