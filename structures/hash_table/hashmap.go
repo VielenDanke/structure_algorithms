@@ -9,16 +9,19 @@ type hashMap struct {
 	elements   []*binaryTreeMap
 	sortFunc   sort
 	size       int
-	capacity   uint
+	capacity   int
 	loadFactor float64
 }
 
-func NewHashMap(size uint, sortFunc sort) (common.Map, error) {
+func NewHashMap(capacity int, sortFunc sort) (common.Map, error) {
 	if sortFunc == nil {
 		return nil, errors.New("sort func is not present")
 	}
-	ht := &hashMap{sortFunc: sortFunc, elements: make([]*binaryTreeMap, size)}
-	ht.capacity = size
+	if capacity < 0 {
+		return nil, errors.New("capacity cannot be less than 0")
+	}
+	ht := &hashMap{sortFunc: sortFunc, elements: make([]*binaryTreeMap, capacity)}
+	ht.capacity = capacity
 	ht.loadFactor = 0.75
 	return ht, nil
 }
@@ -70,7 +73,7 @@ func (ht *hashMap) hashFunction(val interface{}) (idx int) {
 	if val == nil {
 		return 0
 	}
-	idx = (res ^ (res >> 16)) & (int(ht.capacity) - 1)
+	idx = (res ^ (res >> 16)) & (ht.capacity - 1)
 	return
 }
 
