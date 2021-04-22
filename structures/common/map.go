@@ -2,7 +2,7 @@ package common
 
 type Map interface {
 	StructureSize
-	Get(key interface{}) interface{}
-	Put(key interface{}, val interface{})
-	Contains(key interface{}) bool
+	Get(key interface{}) (interface{}, error)
+	Put(key interface{}, val interface{}) error
+	Contains(key interface{}) (bool, error)
 }

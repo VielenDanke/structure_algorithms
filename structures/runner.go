@@ -42,7 +42,5 @@ func main() {
 		counter += 5
 	}
 
-	fmt.Println(hm.Contains(&obj{id: 5001, username: "vo"}))
-	//idx := (31 ^ (31 >> 16)) & (64 - 1)
-	//fmt.Println(idx)
+	fmt.Println(hm.Contains(&obj{id: 301, username: "vo"}))
 }
