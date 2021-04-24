@@ -2,7 +2,7 @@ package common
 
 type Map interface {
 	StructureSize
-	Get(key interface{}) (interface{}, error)
-	Put(key interface{}, val interface{}) error
-	Contains(key interface{}) (bool, error)
+	Get(key EqualHashRule) interface{}
+	Put(key EqualHashRule, val interface{})
+	Contains(key EqualHashRule) bool
 }

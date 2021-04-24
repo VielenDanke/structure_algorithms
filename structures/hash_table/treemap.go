@@ -1,14 +1,13 @@
 package hashtable
 
 import (
-	"errors"
 	"fmt"
 	"github.com/vielendanke/structure_algorithms/structures/common"
 	"github.com/vielendanke/structure_algorithms/structures/queue"
 )
 
 type treeNode struct {
-	key   interface{}
+	key   common.EqualHashRule
 	value interface{}
 	left  *treeNode
 	right *treeNode
@@ -24,10 +23,7 @@ func NewBinaryTreeMap(sortFunc common.Sort) common.Map {
 	return &binaryTreeMap{sortFunc: sortFunc}
 }
 
-func (bt *binaryTreeMap) Put(key interface{}, value interface{}) error {
-	if ok := checkIfEqualImplemented(key); !ok {
-		return errors.New("equal is not implemented by key")
-	}
+func (bt *binaryTreeMap) Put(key common.EqualHashRule, value interface{}) {
 	n := &treeNode{key: key, value: value}
 	if bt.root == nil {
 		bt.root = n
@@ -35,43 +31,36 @@ func (bt *binaryTreeMap) Put(key interface{}, value interface{}) error {
 		bt.insertNode(bt.root, n)
 	}
 	bt.length++
-	return nil
 }
 
-func (bt *binaryTreeMap) Get(key interface{}) (interface{}, error) {
-	if ok := checkIfEqualImplemented(key); !ok {
-		return nil, errors.New("equal is not implemented by key")
-	}
+func (bt *binaryTreeMap) Get(key common.EqualHashRule) interface{} {
 	if bt.root == nil {
-		return nil, nil
+		return nil
 	}
 	if bt.length == 1 {
-		if !key.(common.EqualRule).Equal(bt.root.key) {
-			return nil, nil
+		if !key.Equal(bt.root.key) {
+			return nil
 		} else {
-			return bt.root.value, nil
+			return bt.root.value
 		}
 	} else {
 		n := bt.findNode(bt.root, key)
 		if n == nil {
-			return nil, nil
+			return nil
 		}
-		return n.value, nil
+		return n.value
 	}
 }
 
-func (bt *binaryTreeMap) Contains(key interface{}) (bool, error) {
-	if ok := checkIfEqualImplemented(key); !ok {
-		return false, errors.New("equal is not implemented by key")
-	}
+func (bt *binaryTreeMap) Contains(key common.EqualHashRule) bool {
 	if bt.root == nil {
-		return false, nil
+		return false
 	} else {
 		n := bt.findNode(bt.root, key)
 		if n != nil {
-			return true, nil
+			return true
 		}
-		return false, nil
+		return false
 	}
 }
 
@@ -120,11 +109,11 @@ func (bt *binaryTreeMap) String() string {
 	return fmt.Sprintf("%v", arr)
 }
 
-func (bt *binaryTreeMap) findNode(n *treeNode, key interface{}) (res *treeNode) {
+func (bt *binaryTreeMap) findNode(n *treeNode, key common.EqualHashRule) (res *treeNode) {
 	if n == nil {
 		return
 	}
-	if n.key.(common.EqualRule).Equal(key) {
+	if n.key.Equal(key) {
 		return n
 	}
 	if bt.sortFunc(n.key, key) {
@@ -140,7 +129,7 @@ func (bt *binaryTreeMap) insertNode(n *treeNode, toInsert *treeNode) {
 		n = toInsert
 		return
 	}
-	if n.key.(common.EqualRule).Equal(toInsert.key) {
+	if n.key.Equal(toInsert.key) {
 		return
 	}
 	if bt.sortFunc(n.key, toInsert.key) {
@@ -182,9 +171,4 @@ func inOrderDFS(n *treeNode, arr *[]interface{}) {
 		*arr = append(*arr, n.key)
 		inOrderDFS(n.right, arr)
 	}
-}
-
-func checkIfEqualImplemented(key interface{}) (ok bool) {
-	_, ok = key.(common.EqualRule)
-	return
 }

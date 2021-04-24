@@ -2,26 +2,45 @@ package main
 
 import (
 	"fmt"
-	"github.com/vielendanke/structure_algorithms/structures/graph"
+	"github.com/vielendanke/structure_algorithms/structures/common"
+	hashtable "github.com/vielendanke/structure_algorithms/structures/hash_table"
+	"log"
 )
 
+type node struct {
+	id  int
+	val string
+}
+
+func (n *node) Equal(v common.EqualHashRule) bool {
+	return n.id == v.(*node).id
+}
+
+func (n *node) Hash() int {
+	return n.id * len(n.val)
+}
+
 func main() {
-	wg := graph.NewWeightedGraph()
-	wg.AddVertex("A")
-	wg.AddVertex("B")
-	wg.AddVertex("C")
-	wg.AddVertex("D")
-	wg.AddVertex("E")
-	wg.AddVertex("F")
+	ht, err := hashtable.NewHashMap(16, func(leftKey interface{}, rightKey interface{}) bool {
+		n := leftKey.(*node)
+		r := rightKey.(*node)
+		return n.id > r.id
+	})
+	if err != nil {
+		log.Fatalln(err)
+	}
+	ht.Put(&node{
+		id:  1,
+		val: "avb",
+	}, "bla")
+	ht.Put(&node{
+		id:  2,
+		val: "bbb",
+	}, "bla")
+	ht.Put(&node{
+		id:  3,
+		val: "eee",
+	}, "bla")
 
-	wg.AddEdge("A", "B", 4)
-	wg.AddEdge("A", "C", 2)
-	wg.AddEdge("B", "E", 3)
-	wg.AddEdge("C", "D", 2)
-	wg.AddEdge("C", "F", 4)
-	wg.AddEdge("D", "E", 3)
-	wg.AddEdge("D", "F", 1)
-	wg.AddEdge("E", "F", 1)
-
-	fmt.Println(wg.CalculateShortestPath("A", "E"))
+	fmt.Println(ht.Get(&node{id: 1, val: "bbb"}))
 }
