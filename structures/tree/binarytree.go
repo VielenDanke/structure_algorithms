@@ -14,13 +14,13 @@ func NewBinaryTreeSet(sortFunc func(left interface{}, right interface{}) bool) *
 	return &binaryTreeSet{tm: hashtable.NewBinaryTreeMap(sortFunc)}
 }
 
-func (bt *binaryTreeSet) Add(val interface{}) {
-	bt.tm.Put(val, nil)
+func (bt *binaryTreeSet) Add(val interface{}) error {
+	return bt.tm.Put(val, nil)
 }
 
-func (bt *binaryTreeSet) Contains(val interface{}) bool {
+func (bt *binaryTreeSet) Contains(val interface{}) (bool, error) {
 	if bt.tm.Size() == 0 {
-		return false
+		return false, nil
 	} else {
 		return bt.tm.Contains(val)
 	}

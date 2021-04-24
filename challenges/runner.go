@@ -3,5 +3,5 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(romanToInt("MDCCCLXXXIV"))
+	fmt.Println(calculateFibNumber(50))
 }

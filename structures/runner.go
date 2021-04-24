@@ -2,45 +2,26 @@ package main
 
 import (
 	"fmt"
-	hashtable "github.com/vielendanke/structure_algorithms/structures/hash_table"
-	"log"
+	"github.com/vielendanke/structure_algorithms/structures/graph"
 )
 
-type obj struct {
-	id       int
-	username string
-}
-
-func (o *obj) Equal(val interface{}) bool {
-	incObj, ok := val.(*obj)
-	if !ok {
-		return false
-	}
-	return o.id == incObj.id
-}
-
-func (o *obj) Hash() int {
-	return o.id
-}
-
 func main() {
-	hm, err := hashtable.NewHashMap(16, func(leftKey interface{}, rightKey interface{}) bool {
-		f := leftKey.(*obj)
-		s := rightKey.(*obj)
-		return f.id > s.id
-	})
-	if err != nil {
-		log.Fatalln(err)
-	}
-	counter := 0
+	wg := graph.NewWeightedGraph()
+	wg.AddVertex("A")
+	wg.AddVertex("B")
+	wg.AddVertex("C")
+	wg.AddVertex("D")
+	wg.AddVertex("E")
+	wg.AddVertex("F")
 
-	for counter < 5000 {
-		hm.Put(&obj{id: counter, username: "bla"}, "New World!")
-		hm.Put(&obj{id: counter + 1, username: "vo"}, "Old World!")
-		hm.Put(&obj{id: counter + 2, username: "ded"}, "Between World!")
-		hm.Put(&obj{id: counter + 3, username: "keep"}, "Big World!")
-		counter += 5
-	}
+	wg.AddEdge("A", "B", 4)
+	wg.AddEdge("A", "C", 2)
+	wg.AddEdge("B", "E", 3)
+	wg.AddEdge("C", "D", 2)
+	wg.AddEdge("C", "F", 4)
+	wg.AddEdge("D", "E", 3)
+	wg.AddEdge("D", "F", 1)
+	wg.AddEdge("E", "F", 1)
 
-	fmt.Println(hm.Contains(&obj{id: 301, username: "vo"}))
+	fmt.Println(wg.CalculateShortestPath("A", "E"))
 }

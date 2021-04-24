@@ -40,8 +40,7 @@ func (bt *binaryTreeMap) Put(key interface{}, value interface{}) error {
 
 func (bt *binaryTreeMap) Get(key interface{}) (interface{}, error) {
 	if ok := checkIfEqualImplemented(key); !ok {
-		return nil,
-		errors.New("equal is not implemented by key")
+		return nil, errors.New("equal is not implemented by key")
 	}
 	if bt.root == nil {
 		return nil, nil
