@@ -11,10 +11,10 @@ func quickSort(arr []int, left, right int) []int {
 
 // 67, 50, 32, 45, 929, 3214, 4, 323
 func pivot(arr []int, start, end int) int {
-	pivot := arr[start]
+	p := arr[start]
 	swapIdx := start
 	for i := start + 1; i < end; i++ {
-		if pivot > arr[i] {
+		if p > arr[i] {
 			swapIdx++
 			swap(arr, swapIdx, i)
 		}

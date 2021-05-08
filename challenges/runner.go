@@ -1,7 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func main() {
-	fmt.Println(threeSum([]int{-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6}))
+	f, _ := os.Open("text.txt")
+	words := maxFrequentWordsTwo(f, 10)
+	fmt.Println(words)
 }
