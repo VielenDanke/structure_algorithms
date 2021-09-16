@@ -1,30 +1,23 @@
 package main
 
-func quickSort(arr []int, left, right int) []int {
+func quickSort(arr []int, left, right int) {
 	if left < right {
-		pivotIdx := pivot(arr, left, right)
-		quickSort(arr, left, pivotIdx-1)
-		quickSort(arr, pivotIdx+1, right)
+		partitionIdx := partition(arr, left, right)
+		quickSort(arr, left, partitionIdx - 1)
+		quickSort(arr, partitionIdx + 1, right)
 	}
-	return arr
 }
 
-// 67, 50, 32, 45, 929, 3214, 4, 323
-func pivot(arr []int, start, end int) int {
-	p := arr[start]
-	swapIdx := start
-	for i := start + 1; i < end; i++ {
-		if p > arr[i] {
-			swapIdx++
-			swap(arr, swapIdx, i)
+func partition(arr []int, left int, right int) int {
+	pivot := arr[right]
+	i := left - 1
+
+	for j := left; j < right; j++ {
+		if arr[j] <= pivot {
+			i++
+			arr[i], arr[j] = arr[j], arr[i]
 		}
 	}
-	swap(arr, start, swapIdx)
-	return swapIdx
-}
-
-func swap(arr []int, i, j int) {
-	temp := arr[i]
-	arr[i] = arr[j]
-	arr[j] = temp
+	arr[i+1], arr[right] = arr[right], arr[i+1]
+	return i + 1
 }

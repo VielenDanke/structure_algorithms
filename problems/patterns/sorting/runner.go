@@ -3,6 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	arr := []int{67, 50, 32, 45, 929, 3214, 4, 323}
-	fmt.Println(quickSort(arr, 0, len(arr)))
+	arr := []int{67, 11, 32, 45, 929, 311, 4, 15}
+	quickSort(arr, 0, len(arr)-1)
+	fmt.Println(arr)
 }
